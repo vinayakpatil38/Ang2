@@ -1,0 +1,216 @@
+- tsconfig.json & other tsconfig files 
+        are related to typescript configuration files. what js version code should be generated and what coding standards we should follow while writing ts code etc are stored here.
+
+- package.json
+      all packages that are currently used in the project are added here. 
+	whenever we install any package in our project using npm then automatically an entry 		is added inside this project.
+	need to handle carefully - maximum should avoid to handle manually
+
+- angular.json
+	this file contains information about angular project and its several components 	settings.
+		- main landing page for project
+		- which one is the root module for the project
+		- application prefixes and folders location
+		- styles - you need to apply in project
+		- scripts - additional JS files like jquery are required in project
+		...........
+              "index": "src/index.html",
+			is specifying that this is our startup page for the project
+	do not write any html code here because we need to generate everything from angular 	components.
+
+	     "main": "src/main.ts",
+			as we mentioned angular is collection of modules and by default one root module should be the startup module and that startup module is mentioned in main entry.
+			|
+main.ts inside src folder
+ - contains the modules and configuration entries - most important is the root module class name
+
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+
+Here AppModule is our application Root Module class and the program is present in src/app/app.module.ts file.
+
+Note: In angular everything what we create will be in the form of a class. A decorator specifies what that class is i.e @NgModule says the class is a Module
+				 @Component says the class is a Component
+				 @Directive says the class is a Directive
+				  similarly Pipe, Gaurd ....
+export before class declaration specifies that this class can be consumed in other parts of project ( es specification )
+
+other than that import is used to specify which classes are required for the angular program
+
+				Project
+				   |
+				Module[s]
+				   |
+				collection of various types of components
+				( components--> directives, pipes, guards, model, services )
+
+All such components are mentioned inside @NgModule decorator - whenever we create any type of component we need to register it inside this @NgModule.
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+
+---------------------------------------------------------------------------------------------
+Angular Components
+
+- Every component that we create in Angular is divided into View(Presentation) and Controller(logic)
+
+View --> html
+Controller --> in .ts file all the class code
+
+In addition to the above 2 we use model class in both presentation & controller. So Model View Controller pattern is used to build angular components. (one of the advantage)
+				|
+Binding* ( declarative approach )
+
+- Angular follows binding concept in order to read/write data between this controller and view.
+
+- once component is created we can use that component using its selector. 
+  selector value is user defined and can be used as a tag in other component html views.
+
+To create a component :
+ - preferebly put in Components folder
+		|
+	create a file   filename.component.ts
+			filename.component.html
+		|
+	write required import, selector etc
+		|
+	go to app.module.ts and add the newly created component classname in declarations
+		|
+	goto app.component.html and use the created selector
+-------------------------------------------------------------------------------------------
+
+Adding Angular components using Angular CLI
+
+ng generate component <componentname>
+or
+ng g c <componentname>
+
+Every Angular component that we create has a lifecycle events called component lifecycle hooks.
+starting from component creation till the component getting destroyed.
+
+As a developer when we want to run code at specific point of time then we need to search for relavant component hook and write code inside it.
+
+- It is always preferred to create a model class to handle state of component i.e to store data related to component - without model class handling data will result into many complications for testing and other scenarios.
+
+To create a model class preferebly create models folder and then we can use
+	ng g class <modelclassname>
+
+remember model class are just imported wherever required they need not be added to any module.ts and other locations.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+- 
+
+
+
+
