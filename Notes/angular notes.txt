@@ -1,8 +1,8 @@
-- tsconfig.json & other tsconfig files 
+- tsconfig.json & other tsconfig files
         are related to typescript configuration files. what js version code should be generated and what coding standards we should follow while writing ts code etc are stored here.
 
 - package.json
-      all packages that are currently used in the project are added here. 
+      all packages that are currently used in the project are added here.
 	whenever we install any package in our project using npm then automatically an entry 		is added inside this project.
 	need to handle carefully - maximum should avoid to handle manually
 
@@ -72,7 +72,7 @@ Binding* ( declarative approach )
 
 - Angular follows binding concept in order to read/write data between this controller and view.
 
-- once component is created we can use that component using its selector. 
+- once component is created we can use that component using its selector.
   selector value is user defined and can be used as a tag in other component html views.
 
 To create a component :
@@ -106,6 +106,7 @@ To create a model class preferebly create models folder and then we can use
 
 remember model class are just imported wherever required they need not be added to any module.ts and other locations.
 
+-------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -150,7 +151,6 @@ remember model class are just imported wherever required they need not be added 
 
 
 
-		
 
 
 
@@ -208,8 +208,10 @@ remember model class are just imported wherever required they need not be added 
 
 
 
-			
-- 
+
+
+
+-
 
 
 
