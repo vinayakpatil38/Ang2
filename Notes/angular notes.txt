@@ -118,6 +118,77 @@ remember model class are just imported wherever required they need not be added 
 
 
 
+https://github.com/PBende/ANGDEC21
+
+
+Directives in Angular :
+
+Directives are 2 types
+(i) Built in directives
+(ii) User defined directives
+
+All directives are classes that add additional functionality in the form of code or presentation to the existing element(itself). Angular Declarative approach is achieved using these directives mainly.
+
+<element directive....>
+
+<li *ngFor
+
+To understand directives and its implementation let us understand the types of directives
+
+1. Component Directives
+2. Structural Directives
+3. Attribute Directives
+
+Component Directives
+
+- These are most common directives used in angular programming. The selector that we specify renders the view or html resulting in an output.
+
+Structural Directives:
+
+unlike component directives these directives add or modify DOM behaviour for existing element.
+modify --> adding addl content. removing content
+	ex: *ngFor, *ngIf, *ngSwitch
+
+
+Attribute Directives :
+
+change appearance of an element
+
+
+Demo:
+assets folder importance
+ - any resource in angular application should be stored inside assets folder only.
+
+assets--> images & videos
+
+bootstrap : CDN or npm package
+
+Content Delivery Network :
+
+property binding
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

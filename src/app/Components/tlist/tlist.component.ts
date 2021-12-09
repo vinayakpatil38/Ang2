@@ -15,10 +15,10 @@ export class TlistComponent implements OnInit {
   // whenever the component is loaded this hook code will fire
   ngOnInit(): void {
     this.surveyInfo=[
-      new Survey(101,"Adventure Trip","India",true,"101.mp4"),
-      new Survey(102,"Study Trip","USA",true,"102.mp4"),
-      new Survey(103,"Research Trip","U K",true,"103.mp4"),
-      new Survey(104,"Implementation Trip","India",true,"104.mp4")
+      new Survey(101,"Adventure Trip","/assets/images/101.jpg",true,"/assets/videos/bbb.mp4"),
+      new Survey(102,"Study Trip","/assets/images/102.jpg",true,"/assets/videos/bbb.mp4"),
+      new Survey(103,"Research Trip","/assets/images/103.jpg",true,"/assets/videos/bbb.mp4"),
+      new Survey(104,"Implementation Trip","/assets/images/104.png",true,"/assets/videos/bbb.mp4")
     ];
   }
 

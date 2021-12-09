@@ -1,5 +1,31 @@
 <p>tlist works!</p>
 
-<li *ngFor="let survey of surveyInfo">
+<!-- <li *ngFor="let survey of surveyInfo">
     {{survey.Title}}
-</li>
+</li> -->
+
+<table class="table table-bordered table-striped">
+
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Title</th>
+      <th>View</th>
+      <th>Play</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let survey of surveyInfo">
+      <td>{{survey.Code}}</td>
+      <td>{{survey.Title}}</td>
+      <td>
+        <img id="m1" [src]="survey.Location" height="125" width="125">
+      </td>
+      <td>
+        <video id="v1" [src]="survey.video" controls height="175" width="175"></video>
+      </td>
+    </tr>
+  </tbody>
+
+</table>
