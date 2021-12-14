@@ -107,17 +107,6 @@ To create a model class preferebly create models folder and then we can use
 remember model class are just imported wherever required they need not be added to any module.ts and other locations.
 
 -------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 https://github.com/PBende/ANGDEC21
 
 
@@ -166,6 +155,86 @@ bootstrap : CDN or npm package
 Content Delivery Network :
 
 property binding
+
+--------------------------------------------------------------------------
+
+Adding Packages to our Angular application
+
+When adding any package using CDN links it is faster and efficient but the client/server where we are hosting our application needs to have internet connectivity and in some realtime scenarios we might not have that connectivity. Also every package doesn't support CDN links.
+				|
+In such cases we need to install our packages locally within our application.
+	npm install <package>
+
+In our example we installed bootstrap as CDN. Let us replace 
+
+npm install bootstrap --save
+
+- Once package is installed it doesn't mean that it is readily available - for different packages we might have additional requirements. In case of bootstrap after installing we have to add an entry in angular.json under styles section.
+
+absolute path : c:\angprojects\angdec21\..\node_modules
+relative path : node_modules/bootstrap/......
+
+---------------------------------------------------------------------------------------------
+
+Demo: 
+- Creating Component and consuming it using selector
+- String Interpolation and Example
+- Property Binding & Event Binding
+- Model class and consume it as a List
+- Dynamically perform CRUD operations ( Create, Read --> Update & Delete )
+- Referencing Elements
+
+Angular Change Detection** : 
+   
+Whenever any data in angular component changes then automatically angular updates its view to reflect the changes. Angular monitors at low level what changes have occured within the component by injecting JS & other code(asynchronous). It has a hierarchy maintained
+				|
+If we don't want angular change detection to work implicitly then we can specify change detection strategy
+
+
+@Component({
+  selector: 'app-tlist',
+  templateUrl: './tlist.component.html',
+  ChangeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./tlist.component.css']
+})
+
+- Apart from mentioning changedetection strategy we can also trigger it manually.
+
+detectChanges()
+
+Angular Forms** :
+
+To handle html elements along with model classes and also to implement all input related functionality along with validation and states angular provides forms concept.
+
+Registration form			model class
+					  - prop1
+	Name
+	Surname
+	Phone
+	Email
+	....
+To do this all Angular provides 2 types of forms concept
+	- Template Driven Forms
+	- Reactive or Model Driven Forms**
+--------------------------------------------------------------------------------------------
+
+Template Driven Forms
+
+Demo:
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
 
 
 

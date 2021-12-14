@@ -1,8 +1,16 @@
-<p>tlist works!</p>
 
 <!-- <li *ngFor="let survey of surveyInfo">
     {{survey.Title}}
 </li> -->
+<div>
+  Add your Survey Requirement <br>
+  Code <input type="text" id="txtCode" #txtcode>
+  Title <input type="text" id="txtTitle" #txttitle>
+  Location <input type="text" id="txtLocation" #txtlocation>
+  Video <input type="text" id="txtVideo" #txtvideo>
+  <button class="btn btn-primary" id="btnCreate" (click)="Create(txtcode.value,txttitle.value,txtlocation.value,txtvideo.value)">Add Survey</button>
+</div>
+
 
 <table class="table table-bordered table-striped">
 
@@ -23,7 +31,12 @@
         <img id="m1" [src]="survey.Location" height="125" width="125">
       </td>
       <td>
-        <video id="v1" [src]="survey.video" controls height="175" width="175"></video>
+        <div [hidden]="survey.Visible">
+         <video id="v1" [src]="survey.video" controls height="175" width="175"></video>
+        </div>
+      </td>
+      <td>
+        <button id="btnView" class="btn btn-success" (click)="Display(survey)" >View/Hide</button>
       </td>
     </tr>
   </tbody>

@@ -8,7 +8,7 @@ import { Survey } from 'src/app/models/survey';
 })
 export class TlistComponent implements OnInit {
 
-  surveyInfo:Survey[];
+  surveyInfo:Survey[]; // collection
 
   constructor() { }
 
@@ -17,9 +17,21 @@ export class TlistComponent implements OnInit {
     this.surveyInfo=[
       new Survey(101,"Adventure Trip","/assets/images/101.jpg",true,"/assets/videos/bbb.mp4"),
       new Survey(102,"Study Trip","/assets/images/102.jpg",true,"/assets/videos/bbb.mp4"),
-      new Survey(103,"Research Trip","/assets/images/103.jpg",true,"/assets/videos/bbb.mp4"),
+      new Survey(103,"Research Trip","/assets/images/103.jpg",false,"/assets/videos/bbb.mp4"),
       new Survey(104,"Implementation Trip","/assets/images/104.png",true,"/assets/videos/bbb.mp4")
     ];
+  }
+
+  Create(txtcode,txttitle,txtlocation,txtvideo)
+  {
+    this.surveyInfo.unshift(new Survey(txtcode,txttitle,txtlocation,false,txtvideo));
+    alert("Survey Added");
+    // code to add values to our list and update on the screen
+  }
+
+  Display(survey:Survey)
+  {
+    survey.Visible=!survey.Visible;
   }
 
 }
