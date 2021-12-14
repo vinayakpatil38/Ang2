@@ -21,7 +21,7 @@ export class CustomerComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    this.customerModel=new Customer(0,' ',' ',0,' ');
+    this.customerModel=new Customer(0,'','',0,'');
   }
 
 }
