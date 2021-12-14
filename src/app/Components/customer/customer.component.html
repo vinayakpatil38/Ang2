@@ -1,7 +1,8 @@
 <div class="container">
   <h2>Customer Form</h2>
 
- <form #custForm="ngForm" (ngSubmit)="Create()" autocomplete="off">
+ <form #custForm="ngForm" id="frm" name="frm" (ngSubmit)="Create()" autocomplete="off" >
+
     <div class="form-group">
       <label for="Id">Customer Id</label>
       <input type="text" class="form-control" id="Id" name="Id" required [(ngModel)]="customerModel.Id">
@@ -21,7 +22,7 @@
 
 
     <div class="form-group">
-      <label for="Name">Customer Phone</label>
+      <label for="Phone">Customer Phone</label>
       <input type="text" class="form-control" id="Phone" name="Phone"  required  [(ngModel)]="customerModel.Phone">
     </div>
 
