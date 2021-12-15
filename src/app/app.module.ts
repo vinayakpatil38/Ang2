@@ -8,6 +8,7 @@ import { TlistComponent } from './Components/tlist/tlist.component';
 import { AddTravelComponent } from './Components/add-travel/add-travel.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerComponent } from './Components/customer/customer.component';
+import { RegisterComponent } from './Components/register/register.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { CustomerComponent } from './Components/customer/customer.component';
     MsgComponent,
     TlistComponent,
     AddTravelComponent,
-    CustomerComponent
+    CustomerComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

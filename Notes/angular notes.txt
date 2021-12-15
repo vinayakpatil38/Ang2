@@ -219,8 +219,148 @@ To do this all Angular provides 2 types of forms concept
 --------------------------------------------------------------------------------------------
 
 Template Driven Forms
+ - less preferred
+Demo:
+
+----------------------------------------------------------------------------------------
+
+Reactive Forms or Model Driven Forms
+ - Recommended
+ - In Template Driven forms we are binding our view elements with model class or other variables in ts/class file. It updates data in asynchronous way - mutable data.
+			whereas
+   In Model Driven approach i.e reactive forms we create a model in our class and bind our elements to this defined model class elements. Data is updated in synchronous manner which results in always data is upto date and no delays.
+					|
+(Template driven forms are provided to support old AngularJS forms concept.)
 
 Demo:
+
+Steps
+
+- In the existing angular project goto models--open the terminal
+				|
+- In terminal ng g class User
+	this creates a new class inside models folder. Inside this class create all the required members for which we will design the form.
+
+export class User {
+  name: string;
+  account: {
+      email: string;
+      confirm: string;
+  }
+}
+
+- Once your model class is ready goto Components --> open the terminal and create a new component
+
+- In terminal ng g c Register
+
+- As we are in Model driven approach we need to import ReactiveFormsModule and inside .ts file import ReactiveForms related classes.
+
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { User } from 'src/app/models/user';
+
+@Component({
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
+})
+export class RegisterComponent implements OnInit {
+
+  constructor() { }
+  user:FormGroup; // This is for our ReactiveForm
+
+  userdata:User;  // This is our model class
+
+  ngOnInit(): void {
+    this.user = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      account: new FormGroup({
+          email: new FormControl('', [Validators.required,Validators.email]),
+          confirm: new FormControl('', Validators.required)
+      })
+    });
+  }
+
+  onSubmit()
+  {
+    debugger;
+    this.userdata=this.user.value; // **
+    console.log(this.userdata);
+    alert("Data Successfully Submitted...!");
+  }
+
+}
+
+
+- Once class is defined with formgroup now goto html and design html forms according to created formgroup and formcontrol definitions.
+
+- create html as per model declarations and along with error messages for given validations
+
+<h2>User Registration</h2>
+
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="user">
+    <label>
+      <span>Full name</span>
+      <input type="text" placeholder="Full name" formControlName="name">
+    </label>
+    <div class="error" *ngIf="user.get('name').hasError(('required')) && user.get('name').touched">
+      Name is required
+    </div>
+    <div class="error" *ngIf="user.get('name').hasError('minlength') && user.get('name').touched">
+      Minimum of 2 characters required
+    </div>
+
+    <div formGroupName="account">
+      <label>
+        <span>Email address</span>
+        <input type="email" placeholder="Your email address" formControlName="email">
+      </label>
+      <div class="error"
+        *ngIf="user.get('account').get('email').hasError('required') && user.get('account').get('email').touched">
+        Email is required
+      </div>
+
+      <div>
+      <label>
+        <span>Confirm address</span>
+        <input type="email" placeholder="Confirm your email address" formControlName="confirm">
+      </label>
+      <div
+        class="error"
+        *ngIf="user.get('account').get('confirm').hasError('required') && user.get('account').get('confirm').touched">
+        Confirming email is required
+      </div>
+      <div class="error" *ngIf="user.get('account').touched && user.get('account').hasError('nomatch')">
+        Email addresses must match
+      </div>
+    </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="user.invalid">Sign up</button>
+</form>
+
+
+- Finally add the selector in app.component.html and execute it
+
+============================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
