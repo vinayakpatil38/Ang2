@@ -346,6 +346,88 @@ export class RegisterComponent implements OnInit {
 ============================================================================================
 
 
+Attribute Directives
+
+<input type="text" id="t1" Hlgrow ..... >
+
+- which are related to appearance of the element.
+
+- Angular has lot of built in attribute directives and we have been using them.
+
+- While developing application many requirements are repetitive for some elements - In such 	cases create user defined directives and apply them to elements.
+
+- Every attribute directive is a component but without any presentation for itself which means there will be no selector tag in html( because it is consumed as an attribute inside an element )
+
+- Angular provides a decorator called @Directive for all the directives.
+
+Review :
+	- What are Directives
+	- How Directives are also like components
+	- How Directives are different than components
+	- *Importance of Directives in the project
+
+Now Inside Directive ?
+ Angular provides components or classes that provide a reference to the element that directive is referring to ElementRef is the class.
+ Also it provides Renderer class to apply any changes to the referred element
+
+Example:
+
+import { Directive,ElementRef,Renderer2 } from '@angular/core';
+
+@Directive({
+  selector: '[HLGrow]',
+  host:{
+    '(focus)' : 'onFocus()',
+    '(blur)' : 'onBlur()'
+  }
+})
+export class HLGrowDirective {
+
+  constructor(private el:ElementRef, private renderer : Renderer2) { }
+
+  onFocus(){
+    this.el.nativeElement.style.backgroundColor='yellow';
+    this.renderer.setStyle(this.el.nativeElement,'width','200px');
+  }
+
+  onBlur(){
+    this.el.nativeElement.style.backgroundColor='white';
+    this.renderer.setStyle(this.el.nativeElement,'width','150px');
+  }
+
+}
+
+<input type="text" id="t1" HLGrow ..... >
+
+------------------------------------------------------------------------------------
+
+import { Directive, ElementRef, HostListener } from '@angular/core';
+  @Directive({
+    selector: '[OnlyNumberInput]'
+  })
+export class OnlyNumberInputDirective {
+  @HostListener('keypress', ['$event'])
+  onKeyDown(event: any) {
+    const CharCode=event.charCode;
+    if((CharCode<48||CharCode>57)&&CharCode!=46){
+      event.preventDefault();
+    }
+  }
+}
+
+- Create a blinking directive means when applied that element should blink 5 times and stop
+
+============================================================================================
+
+
+
+
+
+
+
+
+
+
 
 
 
