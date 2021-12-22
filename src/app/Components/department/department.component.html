@@ -1,0 +1,79 @@
+<p>Department Operations !</p>
+
+<h4>Create Department</h4>
+<table>
+    <tr>
+        <td>
+            <input type="hidden" value="0" #DeptId />
+            Enter Department Name:
+        </td>
+        <td>
+            <input type="text" #DeptName />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Enter Department Location:
+        </td>
+        <td>
+            <input type="text" #DeptLocation />
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" class="btn btn-primary" value="Insert Dept" (click)="AddDepartment(DeptId.value,DeptName.value,DeptLocation.value)" />
+        </td>
+    </tr>
+</table>
+<hr />
+<!-- <input type="button" class="btn btn-primary" value="Show Departments" /> -->
+<h4>Departments List</h4>
+<table class="table">
+    <tr>
+        <td>
+            Dep Id
+        </td>
+        <td>
+            Name
+        </td>
+        <td>Location</td>
+        <td></td>
+    </tr>
+    <tr *ngFor="let d of _depts;let i = index"  >
+        <td>{{d.DepartmentId}}</td>
+        <td>{{d.DeptName}}</td>
+        <td>{{d.DeptLocation}}</td>
+        <td>
+            <input type="button" class="btn btn-primary" value="Edit Dept" (click)="EditDepartment(d.DepartmentId)" />
+            <input type="button" class="btn btn-primary" value="Delete" (click)="DeleteDepartment(i)" />
+        </td>
+    </tr>
+</table>
+<hr />
+<div *ngIf="EditDept">
+    <h4>Edit Department</h4>
+    <table>
+        <tr>
+            <td>
+                <input type="hidden" [value]="EditDeptId" #DeptId />
+                Enter Department Name:
+            </td>
+            <td>
+                <input type="text" [value]="EditDeptName" #DeptName />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Enter Department Location:
+            </td>
+            <td>
+                <input type="text" [value]="EditDeptLocation" #DeptLocation />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" class="btn btn-primary" value="Update Dept" (click)="AddDepartment(DeptId.value,DeptName.value,DeptLocation.value)" />
+            </td>
+        </tr>
+    </table>
+</div>

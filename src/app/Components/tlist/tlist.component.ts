@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Survey } from 'src/app/models/survey';
+import { TravelService } from 'src/app/Services/travel.service';
 
 @Component({
   selector: 'app-tlist',
@@ -10,16 +11,11 @@ export class TlistComponent implements OnInit {
 
   surveyInfo:Survey[]; // collection
 
-  constructor() { }
+  constructor(private travelService:TravelService) { }
 
   // whenever the component is loaded this hook code will fire
   ngOnInit(): void {
-    this.surveyInfo=[
-      new Survey(101,"Adventure Trip","/assets/images/101.jpg",true,"/assets/videos/bbb.mp4"),
-      new Survey(102,"Study Trip","/assets/images/102.jpg",true,"/assets/videos/bbb.mp4"),
-      new Survey(103,"Research Trip","/assets/images/103.jpg",false,"/assets/videos/bbb.mp4"),
-      new Survey(104,"Implementation Trip","/assets/images/104.png",true,"/assets/videos/bbb.mp4")
-    ];
+   this.surveyInfo=this.travelService.surveyInfo;
   }
 
   Create(txtcode,txttitle,txtlocation,txtvideo)

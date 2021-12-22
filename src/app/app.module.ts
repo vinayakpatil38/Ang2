@@ -10,6 +10,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerComponent } from './Components/customer/customer.component';
 import { RegisterComponent } from './Components/register/register.component';
 import { HlgrowDirective } from './Directives/hlgrow.directive';
+import { DepartmentComponent } from './Components/department/department.component';
+import { StarComponent } from './Components/star/star.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { HlgrowDirective } from './Directives/hlgrow.directive';
     AddTravelComponent,
     CustomerComponent,
     RegisterComponent,
-    HlgrowDirective
+    HlgrowDirective,
+    DepartmentComponent,
+    StarComponent
   ],
   imports: [
     BrowserModule,

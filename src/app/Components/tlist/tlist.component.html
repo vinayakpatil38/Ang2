@@ -25,7 +25,8 @@
 
   <tbody>
     <tr *ngFor="let survey of surveyInfo">
-      <td>{{survey.Code}}</td>
+      <!-- <DisplaySurvey [surveydata]="survey"></DisplaySurvey> -->
+      <td>{{survey.Code}} <app-star [StarValue]="survey.Visible"></app-star></td>
       <td>{{survey.Title}}</td>
       <td>
         <img id="m1" [src]="survey.Location" height="125" width="125">
@@ -37,6 +38,8 @@
       </td>
       <td>
         <button id="btnView" class="btn btn-success" (click)="Display(survey)" >View/Hide</button>
+
+
       </td>
     </tr>
   </tbody>

@@ -419,6 +419,86 @@ export class OnlyNumberInputDirective {
 
 ============================================================================================
 
+Angular Services : 
+Dependency Injection :
+
+Till now we have built angular components which contains Model View Controller. All our code or logic was written inside the controller part of component.
+				|
+Writing code inside the component will be more usefull to that specific component and also the code increases with more responsibilities which is not good for scalable and maintainable code. Instead we should create different classes to perform different operations so we can reuse them in other parts of application.
+				|
+		Modularity & Reusability
+				|
+To implement this from Language side we need to have good support and Angular provides it in the form of Services. 
+
+Angular Services can be used to store any common value required during execution of program, any function or any feature. Again every service that we create should be with well defined purpose and do it in robust way means perform it well. ( Single Responsibility )
+				
+By preparing a component with a service our components become lean and more efficient and more manageable.
+
+
+Dependency Injection : 
+
+One of the feature of angular is Angular runtime supports built in dependency injection. Once components start consuming services we might have to write many services for many components for different purposes. So a simple and easy way to consume services is required along with testing support.
+
+DI allows us to inject services into a module, component or to entire project. Angular provides another decorator @Injectable() to make a class accessible to other classes
+
+@Injectable()
+export class DemoClass
+{
+  f1()
+  {}
+  f2(){
+  }
+}
+--------------------------------------
+@Component({
+...
+})
+export class EmpComponent
+{
+   constructor(private democlass:DemoClass){}
+   
+   Add()
+   {
+     this.democlass.f1();
+   }
+}
+
+To create a service using CLI we can use
+	ng g service/s Travel
+		|
+	travel.service.ts
+
+- Preferebly in Services folder
+
+demo:
+
+- a service can be consumed to entire application or to a specific module or to a specific component. Consumption remains same.
+			|
+	
+
+- reactive forms along with services --> CRUD Operations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
