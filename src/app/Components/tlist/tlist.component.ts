@@ -4,8 +4,7 @@ import { TravelService } from 'src/app/Services/travel.service';
 
 @Component({
   selector: 'app-tlist',
-  templateUrl: './tlist.component.html',
-  styleUrls: ['./tlist.component.css']
+  templateUrl: './tlist.component.html'
 })
 export class TlistComponent implements OnInit {
 
@@ -18,6 +17,10 @@ export class TlistComponent implements OnInit {
    this.surveyInfo=this.travelService.surveyInfo;
   }
 
+  Show(s)
+  {
+    alert("message " + s);
+  }
   Create(txtcode,txttitle,txtlocation,txtvideo)
   {
     this.surveyInfo.unshift(new Survey(txtcode,txttitle,txtlocation,false,txtvideo));

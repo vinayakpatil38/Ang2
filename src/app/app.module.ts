@@ -12,6 +12,8 @@ import { RegisterComponent } from './Components/register/register.component';
 import { HlgrowDirective } from './Directives/hlgrow.directive';
 import { DepartmentComponent } from './Components/department/department.component';
 import { StarComponent } from './Components/star/star.component';
+import { SurveydataComponent } from './Components/surveydata/surveydata.component';
+import { AddsurveyComponent } from './Components/addsurvey/addsurvey.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import { StarComponent } from './Components/star/star.component';
     RegisterComponent,
     HlgrowDirective,
     DepartmentComponent,
-    StarComponent
+    StarComponent,
+    SurveydataComponent,
+    AddsurveyComponent
   ],
   imports: [
     BrowserModule,
