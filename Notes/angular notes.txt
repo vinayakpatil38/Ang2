@@ -478,6 +478,86 @@ demo:
 
 - reactive forms along with services --> CRUD Operations
 
+====================================================================================
+Building effective and reusable components (or) Communicating and Sharing data between components :
+
+Till now we have built components that are reused with selector in more than one place. It is also important that components should share data which means passing data from one component to other.
+
+		Component 1   <--------->  Component 2
+		(parent)		   (child)
+
+In Angular we have 2 important decorators @Input() & @Output()
+
+Context ---> Parent to Child
+		
+		(Parent)		(Child)
+		TListComponent		AddTravel
+		<AddTravel>
+
+@Input() decorator is written in child component for which data will be sent from parent component
+
+					class AddTravel
+					{
+					 @Input() Ename:string
+						....
+					}
+Like this we can design a component that can take input from parent component resulting in for multiple purposes.
+
+from parent
+
+@Output() decorator is also written in child component and it allows us to pass data from child to parent.
+
+3 steps for @Output
+--------------------
+
+(i)  import { Output, EventEmitter } from .....core
+
+(ii) specify a property and add @Output() decorator
+
+	@Output() notify=new EventEmitter<T>();
+
+(iii) this.notify.emit(<value>);
+
+@Output is making a property for passing data
+
+notify is the name through which we will pass data
+-------------------------------------------
+In Parent
+
+<child (notify)="f1()" .....>
+
+
+f1()
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
