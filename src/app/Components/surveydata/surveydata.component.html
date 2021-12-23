@@ -1,0 +1,10 @@
+<div class="container">
+  <h3>{{surveyrecord.Code}}</h3>
+  <h4>{{surveyrecord.Title}}</h4>
+  <img id="m1" [src]="surveyrecord.Location" height="125" width="125">
+  <br>
+  Post your comment
+  <input type="text" id="txtpost" name="txtpost" #txtpost>
+  <input type="button" id="btnpost" name="btnpost" (click)="PostComment(txtpost.value)" value="Post Comment">
+  <hr>
+</div>

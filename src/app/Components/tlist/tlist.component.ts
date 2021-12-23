@@ -18,6 +18,11 @@ export class TlistComponent implements OnInit {
    this.surveyInfo=this.travelService.surveyInfo;
   }
 
+  GetComment(comment)
+  {
+    alert("Comment Recd : " + comment);
+  }
+
   Create(txtcode,txttitle,txtlocation,txtvideo)
   {
     this.surveyInfo.unshift(new Survey(txtcode,txttitle,txtlocation,false,txtvideo));

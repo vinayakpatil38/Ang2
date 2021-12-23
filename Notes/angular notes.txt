@@ -532,6 +532,19 @@ f1()
 
 }
 
+-----------------------------------------------------------------------------
+Demo :
+
+@Input() with model class data
+@Output by communicating comments to parent class
+
+Exercize --> create a reusable component which displays the count of likes that users provide for individual survey
+
+
+
+
+
+
 
 
 
