@@ -540,6 +540,449 @@ Demo :
 
 Exercize --> create a reusable component which displays the count of likes that users provide for individual survey
 
+-----------------------------------------------------------
+
+Communicating with DataSource from Angular ( Javascript )
+Web Apis
+
+DataSource --> where data is present and primarily it is database like SQL Server, Oracle, 		PostGreSql, MongoDB etc
+
+Angular communicates with DataSources using Web Apis.
+
+Web Api are programs that serialize data in open standard formats like XML, JSON
+
+Application Programming Interface
+
+RESTfull services --> Programs written in the form of services or Service Oriented Architecture(SOA). Every Service/method is consumed with a Uri.
+
+Angular <----JSON----> Web Api <------> DataSource(DB..)
+
+Today we have huge no of Apis for most of our requirements starting from browser level till cloud level including AI, ML , DataScience
+
+Where do we build these API's ?
+If we want to build api's then frameworks/languages like .NET Core, JAVA, Python etc can be used.
+
+.NET core is one of the richest platform today to build api.
+
+
+SOA/RESTFull --> Communication should be with HTTP standards using its verbs
+
+		GET ---> retrieving the data
+		POST --> adding the data
+		PUT --> Updating the data
+		Delete --> Delete the data
+
+So Web Api's follow the same and provide their methods to be consumed in HTTP verbs model.
+
+------------------------------------------------------------------------------------------
+
+
+Consuming Apis from Angular
+
+import {HttpClientModule} from '@angular/common/http';
+	|
+import { HttpClient } from '@angular/common/http';
+	|
+using this HttpClient class we will invoke All Http Operations
+						|
+					get,post,put,delete and other
+All these methods return observables*
+
+In asynchronous programming--> It is very complex to handle requests and responses as it is completely thread based. So for better asynchronous handling Promises and Observables concept is provided by Javascript( Angular and other frameworks) Rx/Js is the most popular library for the async operations.
+Angular use this earlier as an external library and today it is included in most of its libraries like reactive forms, httpclient etc
+
+
+Thread t1=new ThreadStart(f1);
+t1.start()
+f2();
+
+------------------------------------------------------------------------------------------
+Example : Creating and Consuming API's from Angular
+
+- Create or find an existing API and ensure that API is running. Also note the URL of running api because we need to use as part of angular code.
+				|
+In my example ---> http://localhost:34135/api/employee
+
+In realtime development url and deployment urls will be different. Angular provides environment.ts and environment.prod.ts for maintaining different urls.
+				|
+Goto Angular Project --> add apiurl in environment.ts
+				|
+Add HttpClientModule as part of app.module.ts so that we can make httpclient calls from angular project
+import { HttpClientModule } from '@angular/common/http';
+
+				|
+Goto Services and create a new service which should be written with methods to invoke apis.
+				|
+emp-service.service.ts
+
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { HttpClient,HttpHeaders }    from '@angular/common/http'; 
+import { catchError, tap } from 'rxjs/Operators';
+// import { catchError, map, tap } from 'rxjs/Operators';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EmpServiceService {
+
+ apiUrl=environment.apiUrl;
+
+  constructor(private http: HttpClient) { }
+  httpOptions = {  
+    headers: new HttpHeaders({  
+      'Content-Type': 'application/json'  
+    })  
+  }    
+  GetEmployees(){       
+    return this.http.get(apiUrl);  
+  }  
+  
+  postEmployee(formData:any){  
+   // return this.http.post('http://localhost:53045/api/Employee/CreateorUpdate',formData); 
+   return this.http.post<any>('http://localhost:34135/api/Employee/Create',formData).pipe(tap(formData), catchError(this.handleError<any>('Batch Add Failed')));
+  }  
+  
+  putEmployee(id,formData){  
+    return this.http.put<any>('http://localhost:34135/api/Employee/Update',formData).pipe(tap(formData), catchError(this.handleError<any>('Batch Update Failed')));
+   // return this.http.put('http://localhost:53045/api/Employee/CreateorUpdate',formData);  
+  } 
+
+  Delete(id):Observable<number>{ 
+    return this.http.delete<number>('http://localhost:34135/api/Employee/Delete?id='+id);     
+  
+  }
+ 
+  // GetEmployeebyId(id) {
+  //   return this.http.get<any>("http://localhost:34135/api/Employee/GetEmployee/{id} ", id).pipe(tap(id), catchError(this.handleError<any>('Batch View Failed')));
+  // }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      console.error(error);
+      console.log('${operation}failed:${error.message}');
+      return of(result as T);
+    }
+  }
+}
+
+---------------------------------------------------------------------------------
+- Once Service is ready with all required methods then we can create a component
+
+EmpCrud.Component.ts
+
+
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Employee } from 'src/app/ModelClass/employee';
+import { EmpServiceService } from 'src/app/Services/emp-service.service';
+
+@Component({
+  selector: 'app-emp-crud',
+  templateUrl: './emp-crud.component.html',
+  styleUrls: ['./emp-crud.component.css']
+})
+export class EmpCrudComponent {
+  popup: boolean = false;
+  popup1: boolean = false;
+  memp: Employee;
+  data = [];
+
+  EmployeeForm: FormGroup;
+  DeleteForm: FormGroup;
+  ViewEmployeeForm: FormGroup;
+
+  submitted = false;
+  EventValue: any = "Save"
+
+  constructor(private EmpServiceService: EmpServiceService) { }
+
+  ngOnInit(): void {
+    this.GetEmployees();
+
+    this.ViewEmployeeForm = new FormGroup({
+      id: new FormControl(),
+      name: new FormControl(),
+      department: new FormControl(),
+      salary: new FormControl()
+    })
+
+    this.EmployeeForm = new FormGroup({
+      id: new FormControl(""),
+      name: new FormControl("", [Validators.required]),
+      department: new FormControl("", [Validators.required]),
+      salary: new FormControl("", [Validators.required]),
+    })
+
+  }
+  GetEmployees() {
+    // debugger;
+    this.EmpServiceService.GetEmployees().subscribe((data: any) => {
+      this.data = data;
+    })
+  }
+
+
+  Delete(id) {
+    this.EventValue = "Delete";
+    this.GetEmployees();
+    alert("Do you want to Delete"); //
+
+
+  }
+
+
+  Save() {
+    this.submitted = true;
+
+    if (this.EmployeeForm.invalid) {
+      return;
+    }
+
+    this.memp = this.EmployeeForm.value;
+    this.memp.salary = +this.EmployeeForm.value.salary;
+    this.memp.id = 0;
+    this.EmpServiceService.postEmployee(this.memp).subscribe((data: any[]) => {
+      //debugger;
+      this.data = data;
+      this.resetFrom();
+    })
+  }
+  Update() {
+    //debugger;
+    this.submitted = false;
+    if (this.EmployeeForm.invalid) {
+      return;
+    }
+    // this.memp=this.EmployeeForm.value.id;
+     this.memp = this.EmployeeForm.value;
+     this.memp.salary = +this.EmployeeForm.value.salary;
+    this.EmpServiceService.putEmployee(this.memp.id, this.memp).subscribe((data: any[]) => {
+      this.data = data;
+      this.resetFrom();
+    })
+  }
+
+  EditData(Data) {
+    alert("Do you want to Edit")
+    debugger;
+    this.EmployeeForm.controls["id"].setValue(Data.id);
+    this.EmployeeForm.controls["name"].setValue(Data.name);
+    this.EmployeeForm.controls["department"].setValue(Data.department);
+    this.EmployeeForm.controls["salary"].setValue(Data.salary);
+    this.EventValue = "Update";
+  }
+
+  ViewData(Data) {
+    this.popup = true;
+    this.EmployeeForm.controls["id"].setValue(Data.id);
+    this.ViewEmployeeForm.controls["name"].setValue(Data.name);
+    this.ViewEmployeeForm.controls["department"].setValue(Data.department);
+    this.ViewEmployeeForm.controls["salary"].setValue(Data.salary);
+  }
+  DeleteData(Data) {
+    debugger
+    alert("Do you want to Delete?")
+    this.popup1 = true;
+    this.EmployeeForm.controls["id"].setValue(Data.id);
+    this.EmployeeForm.controls["name"].setValue(Data.name);
+    this.EmployeeForm.controls["department"].setValue(Data.department);
+    this.EmployeeForm.controls["salary"].setValue(Data.salary);
+    this.EventValue = "Delete";
+    this.EmpServiceService.Delete(Data).subscribe(result => {
+      console.log(result);
+      this.EventValue = "Delete";
+    })
+  }
+  resetFrom() {
+    this.GetEmployees();
+    this.EmployeeForm.reset();
+    this.EventValue = "Save";
+    this.EventValue = "Delete";
+    this.submitted = false;
+  }
+
+}
+---------------------------------------------------------------------------------------
+In html
+
+<div class="container">
+  <form [formGroup]="EmployeeForm" (ngSubmit)="this[EventValue]()">
+    <h3 style="color:orangered;"><b> Employee Table CRUD Operation</b></h3>
+
+    <div class="row">
+      <div class="overlay" *ngIf="popup1">
+        <div class="popup1">
+          <div class="head">
+            <div class="text-right" (click)="popup1=false">
+              <button class="btn btn-sm btn-success">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <table class="table" style="width: 750px;">
+
+
+        <tr>
+          <td class="text-center" ><b>Name</b></td>
+          <td class="text-center">
+            <input type="hidden" formControlName="id">
+            <input type="text" formControlName="name">
+            <div *ngIf="submitted && EmployeeForm.controls.Name.errors" class="text-danger">
+              <div *ngIf="EmployeeForm.controls.Name.errors.required">Name is required</div>
+            </div>
+            <!-- <div class="text-danger" *ngIf="EmployeeForm.controls.Name.errors.required &&submitted ">Name is required</div>  -->
+          </td>
+        </tr>
+
+
+        <tr>
+          <td class="text-center" ><b>Department</b></td>
+          <td class="text-center">
+            <input type="text" formControlName="department">
+            <div *ngIf="submitted && EmployeeForm.controls.Department.errors" class="text-danger">
+              <div *ngIf="EmployeeForm.controls.Department.errors.required">Department is required</div>
+            </div>
+            <!-- <div *ngIf="submitted && EmployeeForm.controls.Department.errors" class="text-danger">Department is required</div>  -->
+          </td>
+        </tr>
+        <tr>
+          <td class="text-center" ><b>Salary</b></td>
+          <td class="text-center">
+            <input type="string" formControlName="salary">
+            <div *ngIf="submitted && EmployeeForm.controls.salary.errors" class="text-danger">
+              <div *ngIf="EmployeeForm.controls.salary.errors.required">Salary is required</div>
+            </div>
+            <!-- <div class="text-danger" *ngIf="EmployeeForm.controls.salary.errors.required &&submitted ">Salary is required</div> -->
+          </td>
+        </tr>
+        <tr>
+
+          <td class="text-center" colspan="2">
+            <button type="submit" class="btn btn-primary">{{EventValue}}</button>
+          </td>
+        </tr>
+
+      </table>
+    </div>
+
+    <div class="row">
+      <table class="table table-striped" style="width: 750px;">
+        <tr>
+          <td class="text-center" ><b>Id</b></td>
+          <td class="text-center" ><b>Name</b></td>
+          <td class="text-center" ><b>Department</b></td>
+          <td class="text-center" ><b>Salary</b></td>
+          <td class="text-center" colspan="3" ><b> Actions</b> </td>
+        </tr>
+        <!-- <tr *ngFor="let d of data">
+          <td>{{d.id}}</td> -->
+        <tr *ngFor="let d of data; let i=index">
+          <td class="text-center" >{{i+1}}</td>
+          <td class="text-center" >{{d.name}}</td>
+          <td class="text-center">{{d.department}}</td>
+          <td class="text-center" >{{d.salary}}</td>
+
+
+          <td class="text-center"><a (click)="EditData(d)" class="btn btn-warning">Edit</a></td>
+          <!-- <td><a (click)="delete()" class="btn btn-danger">Delete</a></td> -->
+
+          <td class="text-center"><a (click)="DeleteData(d.id)" class="btn btn-danger">Delete</a></td>
+          <td class="text-center"><a (click)="ViewData(d)" class="btn btn-primary">View</a></td>
+
+        </tr>
+
+      </table>
+    </div>
+
+
+    <div class="overlay" *ngIf="popup">
+      <div class="popup">
+        <div class="head">
+
+        </div>
+        <br>
+        <form [formGroup]="ViewEmployeeForm">
+          <div class="form-group">
+
+            <label class="yes">Name</label><span> :- </span>
+            <input type="text" formControlName="name">
+          </div>
+          <div class="form-group">
+
+            <label class="yes">Department</label><span> :- </span>
+            <input type="text" formControlName="department">
+          </div>
+          <div class="form-group">
+            <label class="yes">Salary </label><span> :- </span>
+
+            <input type="text" formControlName="salary">
+          </div>
+          <div class="text-right" (click)="popup= false"><button class="btn btn-sm btn-success">Ok</button></div>
+        </form>
+      </div>
+    </div>
+
+-----------------------------------------------------------------------------------
+ng s 
+|
+run in the browser
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
