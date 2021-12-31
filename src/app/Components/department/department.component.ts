@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Department } from 'src/app/models/department';
 import { DepartmentsService } from 'src/app/Services/departments.service';
 
@@ -15,7 +16,7 @@ export class DepartmentComponent {
   EditDeptId: number = 0;
   EditDept: boolean = false;
 
-  constructor(private depts: DepartmentsService) {
+  constructor(private depts: DepartmentsService, private router:Router) {
       this._depts = depts.GetDepts();
   }
   AddDepartment(DeptId: string, Name: string, Location: string) {
@@ -24,6 +25,8 @@ export class DepartmentComponent {
       else
           this.depts.UpdateDepartment(parseInt(DeptId), Name, Location);
       this.EditDept = false;
+
+      this.router.navigateByUrl("/Home"); // runtime
   }
 
   DeleteDepartment(Index: number) {
